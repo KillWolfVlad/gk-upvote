@@ -1,13 +1,18 @@
 [
   "https://feedback.gitkraken.com/suggestions/187158/support-worktrees",
   "https://feedback.gitkraken.com/suggestions/191565/support-sshconfig-file",
+  "https://feedback.gitkraken.com/suggestions/191603/pin-branch-to-left-in-the-graph",
   "https://feedback.gitkraken.com/suggestions/191722/automate-maintenance-of-old-outdated-branches",
+  "https://feedback.gitkraken.com/suggestions/191932/add-support-for-splitting-an-existing-commit",
   "https://feedback.gitkraken.com/suggestions/192458/option-to-squash-when-merging-branch",
   "https://feedback.gitkraken.com/suggestions/194039/support-multiple-gitkraken-windows",
   "https://feedback.gitkraken.com/suggestions/198034/option-to-downgrade-to-previous-version",
+  "https://feedback.gitkraken.com/suggestions/198719/provide-option-to-use-custom-avatar-that-doesnt-require-gravatar",
   "https://feedback.gitkraken.com/suggestions/200670/support-groups-of-tabs",
+  "https://feedback.gitkraken.com/suggestions/201076/support-for-arm64",
   "https://feedback.gitkraken.com/suggestions/203886/support-shallow-clones",
   "https://feedback.gitkraken.com/suggestions/256835/enable-to-change-icon-of-remote-repository",
+  "https://feedback.gitkraken.com/suggestions/278052/auto-push-on-commit-option-to-commit-and-push",
   "https://feedback.gitkraken.com/suggestions/313734/visual-cues-for-branches-and-remotes",
   "https://feedback.gitkraken.com/suggestions/362060/support-for-opening-repos-stored-in-wsl-2-from-the-windows-version-of-gitkraken-",
   "https://feedback.gitkraken.com/suggestions/497258/ability-to-diff-binary-files"
