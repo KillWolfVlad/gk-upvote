@@ -1,0 +1,20 @@
+{
+  "name": "gk-upvote",
+  "version": "0.0.0-development",
+  "private": true,
+  "description": "Script for auto voting on GitKraken feedback website",
+  "homepage": "https://github.com/KillWolfVlad/gk-upvote#readme",
+  "bugs": {
+    "url": "https://github.com/KillWolfVlad/gk-upvote/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KillWolfVlad/gk-upvote.git"
+  },
+  "license": "UNLICENSED",
+  "author": "KillWolfVlad",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}
