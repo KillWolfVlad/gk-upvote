@@ -11,7 +11,10 @@ describe("Upvote", () => {
       const htmlResponse = await fetch(
         `https://feedback.gitkraken.com/suggestions/${encodeURIComponent(
           feedbackId
-        )}`
+        )}`,
+        {
+          signal: AbortSignal.timeout(60_000),
+        }
       );
 
       const html = await htmlResponse.text();
@@ -35,6 +38,7 @@ describe("Upvote", () => {
           headers: {
             cookie: htmlResponse.headers.getSetCookie().join(";"),
           },
+          signal: AbortSignal.timeout(60_000),
         }
       ).then((response) => response.text());
 
