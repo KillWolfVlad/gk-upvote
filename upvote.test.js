@@ -17,6 +17,8 @@ describe("Upvote", () => {
         }
       );
 
+      assert.strictEqual(htmlResponse.status, 200, "site must be available");
+
       const html = await htmlResponse.text();
 
       const csrfToken = html.match(
