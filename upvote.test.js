@@ -28,12 +28,12 @@ describe("Upvote", () => {
       const formData = new FormData();
 
       formData.append("csrf_token", csrfToken);
-      formData.append("ts", new Date().getTime());
+      formData.append("showVotingOptions", "true");
 
-      const toggleUpvoteResult = await fetch(
+      const toggleUpvoteResponse = await fetch(
         `https://feedback.gitkraken.com/s/${encodeURIComponent(
           feedbackId
-        )}/toggleupvote`,
+        )}/vote`,
         {
           method: "POST",
           body: formData,
@@ -42,9 +42,13 @@ describe("Upvote", () => {
           },
           signal: AbortSignal.timeout(60_000),
         }
-      ).then((response) => response.text());
+      );
 
-      assert.strictEqual(toggleUpvoteResult, "OK");
+      assert.strictEqual(
+        toggleUpvoteResponse.status,
+        200,
+        "voting must be successfully"
+      );
     });
   }
 });
