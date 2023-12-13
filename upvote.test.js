@@ -1,53 +1,68 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import suggestions from "./suggestions.json" assert { type: "json" };
+import suggestionUrls from "./suggestionUrls.json" assert { type: "json" };
 
 describe("Upvote", () => {
-  for (const suggestion of suggestions) {
-    it(suggestion, async () => {
-      const feedbackId = suggestion.match(/\/suggestions\/(\d+)\//)[1];
+  for (const suggestionUrl of suggestionUrls) {
+    it(suggestionUrl, async () => {
+      const suggestionId = suggestionUrl.match(/\/suggestions\/(\d+)\//)[1];
 
-      const htmlResponse = await fetch(
-        `https://feedback.gitkraken.com/suggestions/${encodeURIComponent(
-          feedbackId
-        )}`,
-        {
-          signal: AbortSignal.timeout(60_000),
-        }
+      const getSuggestionHtmlResponse = await fetch(suggestionUrl, {
+        signal: AbortSignal.timeout(60_000),
+      });
+
+      assert.strictEqual(
+        getSuggestionHtmlResponse.status,
+        200,
+        `${suggestionUrl} must be available`
       );
 
-      assert.strictEqual(htmlResponse.status, 200, "site must be available");
+      const suggestionHtml = await getSuggestionHtmlResponse.text();
 
-      const html = await htmlResponse.text();
-
-      const csrfToken = html.match(
+      const csrfToken = suggestionHtml.match(
         /<input type="hidden" name="csrf_token" value="(.*)">/
       )[1];
 
-      const formData = new FormData();
+      const voteFormData = new FormData();
 
-      formData.append("csrf_token", csrfToken);
-      formData.append("showVotingOptions", "true");
+      voteFormData.append("csrf_token", csrfToken);
+      voteFormData.append("showVotingOptions", "true");
 
-      const toggleUpvoteResponse = await fetch(
+      const voteCookies = getSuggestionHtmlResponse.headers
+        .getSetCookie()
+        .map((setCookie) => {
+          const [cookie] = setCookie
+            .split(";")
+            .map((x) => x.trim())
+            .filter((x) => !!x);
+
+          return cookie;
+        })
+        .join("; ");
+
+      const voteHeaders = {
+        cookie: voteCookies,
+        "hx-request": "true",
+        referer: suggestionUrl,
+      };
+
+      const voteResponse = await fetch(
         `https://feedback.gitkraken.com/s/${encodeURIComponent(
-          feedbackId
+          suggestionId
         )}/vote`,
         {
           method: "POST",
-          body: formData,
-          headers: {
-            cookie: htmlResponse.headers.getSetCookie().join(";"),
-          },
+          body: voteFormData,
+          headers: voteHeaders,
           signal: AbortSignal.timeout(60_000),
         }
       );
 
       assert.strictEqual(
-        toggleUpvoteResponse.status,
+        voteResponse.status,
         200,
-        "voting must be successfully"
+        `voting for ${suggestionUrl} must be successfully`
       );
     });
   }
